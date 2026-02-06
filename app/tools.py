@@ -228,11 +228,16 @@ def create_action_list(
 def generate_summary(
     stats: Dict[str, Any],
     classifications: Dict[str, Any],
-    persistent_sites: Dict[str, Any],
+    persistent_sites: Any,
     action_list: Dict[str, Any],
     shift_id: Optional[str],
     llm,
 ) -> Dict[str, Any]:
+    if isinstance(persistent_sites, list):
+        persistent_sites = {"persistent_sites": persistent_sites}
+    elif not isinstance(persistent_sites, dict):
+        persistent_sites = {}
+
     payload = {
         "shift_id": shift_id,
         "stats": stats,
@@ -381,7 +386,12 @@ TOOL_SCHEMAS = [
                 "properties": {
                     "stats": {"type": "object"},
                     "classifications": {"type": "object"},
-                    "persistent_sites": {"type": "object"},
+                    "persistent_sites": {
+                        "anyOf": [
+                            {"type": "object"},
+                            {"type": "array", "items": {"type": "string"}},
+                        ]
+                    },
                     "action_list": {"type": "object"},
                     "shift_id": {"type": "string"},
                 },
