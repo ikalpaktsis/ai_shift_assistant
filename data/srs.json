@@ -1,0 +1,14 @@
+{
+  "shift_id": "2026-02-06-23:00",
+  "srs": [
+    {
+      "id": "SR-10234",
+      "title": "Fiber cut",
+      "status": "Open",
+      "priority": "High",
+      "last_update": "2026-02-06T20:10:00Z",
+      "site": "Athens POP",
+      "escalation_flag": true
+    }
+  ]
+}
