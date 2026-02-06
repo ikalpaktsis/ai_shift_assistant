@@ -11,7 +11,11 @@ class LLMClient:
         api_key = api_key or os.getenv("OPENAI_API_KEY")
         if not api_key:
             raise LLMError("OPENAI_API_KEY is required to run the agent.")
-        self.client = OpenAI(api_key=api_key, timeout=timeout)
+        base_url = os.getenv("OPENAI_BASE_URL")
+        if base_url:
+            self.client = OpenAI(api_key=api_key, base_url=base_url, timeout=timeout)
+        else:
+            self.client = OpenAI(api_key=api_key, timeout=timeout)
         self.model = model or os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
         self.temperature = float(os.getenv("OPENAI_TEMPERATURE", temperature))
 
